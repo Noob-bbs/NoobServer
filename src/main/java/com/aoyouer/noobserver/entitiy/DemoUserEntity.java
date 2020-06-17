@@ -1,6 +1,4 @@
-package com.aoyouer.noobserver.entities;
-
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+package com.aoyouer.noobserver.entitiy;
 
 import javax.persistence.*;
 
