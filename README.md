@@ -27,5 +27,3 @@
 4. 读取配置文件(可修改的配置文件)
 5. HTTPS传输
 6. 更多的CRUD操作...
-
-<script type="text/javascript" src="//rf.revolvermaps.com/0/0/8.js?i=52mywh6d0dy&amp;m=0&amp;c=ff0000&amp;cr1=ffffff&amp;f=arial&amp;l=49" async="async"></script>
