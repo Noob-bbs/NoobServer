@@ -48,4 +48,11 @@ public class UserController {
             return new Response(400,e);
         }
     }
+    //登出账号
+    @GetMapping(value = "/logout")
+    public Response logout(){
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return new Response(200,"成功登出");
+    }
 }
