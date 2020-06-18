@@ -1,6 +1,7 @@
 package com.aoyouer.noobserver.entitiy;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -11,7 +12,14 @@ public class Role {
     private Long id;
     private String roleName;
     @OneToMany(targetEntity = Permission.class)
-    private Set<Permission> permissionSet;
+    private Set<Permission> permissionSet = new HashSet<>();
+
+    public Role() {
+    }
+
+    public Role(String roleName) {
+        this.roleName = roleName;
+    }
 
     public Long getId() {
         return id;

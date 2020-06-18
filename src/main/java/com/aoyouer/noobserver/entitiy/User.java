@@ -1,6 +1,7 @@
 package com.aoyouer.noobserver.entitiy;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -17,6 +18,10 @@ public class User {
     //用户所具有的角色
     @OneToMany(targetEntity = Role.class)
     private Set<Role> roleSet;
+
+    public User() {
+        //this.roleSet.add(new Role("MEMBER"));
+    }
 
     public Long getId() {
         return id;

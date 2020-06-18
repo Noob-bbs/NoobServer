@@ -1,18 +1,24 @@
 package com.aoyouer.noobserver.controller;
 
+import com.aoyouer.noobserver.entitiy.Role;
 import com.aoyouer.noobserver.entitiy.User;
 import com.aoyouer.noobserver.exception.RegisterException;
 import com.aoyouer.noobserver.service.UserService;
 import com.aoyouer.noobserver.utils.Encrypt;
 import com.aoyouer.noobserver.utils.Response;
+import com.sun.xml.bind.v2.TODO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @RestController
@@ -42,6 +48,14 @@ public class UserController {
             user.setPassword(Encrypt.encrypt(user.getPassword(),user.getAccount()));
             //添加用户到数据库中，这里可能会抛出异常——账户重名(其实还应该检查一下输入的合法性，虽然前端可以检查，但是有可能被绕过
             user.setSalt(user.getAccount());
+            //关于角色这部分，暂时只作为测试使用
+            //TODO 用户默认为普通用户
+            if (user.getRoleSet() == null){
+                System.out.println("角色集为空");
+            }
+            else {
+                System.out.println("角色集非空" + user.getRoleSet().toString());
+            }
             userService.registerUser(user);
             return new Response(200,"已成功注册");
         }catch (RegisterException e){
@@ -55,4 +69,13 @@ public class UserController {
         subject.logout();
         return new Response(200,"成功登出");
     }
+
+    //添加用户
+    @PostMapping(value = "/adduser")
+    @RequiresRoles(value = {"ADMIN","MANAGER"},logical = Logical.OR)
+    public Response addUser(@RequestBody User user){
+        userService.registerUser(user);
+        return new Response(200,"成功添加用户");
+    }
+
 }
