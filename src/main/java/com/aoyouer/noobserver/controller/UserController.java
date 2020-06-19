@@ -71,11 +71,12 @@ public class UserController {
     }
 
     //添加用户
+    //TODO 目前这个方法还只是测试用，之后还需要添加加密以及使用和注册类似的构造方法才能正常使用
     @PostMapping(value = "/adduser")
     @RequiresRoles(value = {"ADMIN","MANAGER","MEMBER"},logical = Logical.OR)
     public Response addUser(@RequestBody User user){
-        userService.registerUser(user);
 
+        userService.registerUser(user);
         return new Response(200,"成功添加用户");
     }
     //检查当前用户信息
