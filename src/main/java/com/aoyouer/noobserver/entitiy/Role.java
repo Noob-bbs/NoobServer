@@ -1,5 +1,7 @@
 package com.aoyouer.noobserver.entitiy;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
@@ -11,6 +13,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String roleName;
+    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     @OneToMany(targetEntity = Permission.class)
     private Set<Permission> permissionSet = new HashSet<>();
 

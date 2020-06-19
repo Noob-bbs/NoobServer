@@ -54,11 +54,7 @@ public class UserController {
                 System.out.println("角色集非空" + user.getRoleSet().toString());
             }
             //为了防止构造请求直接修改了权限，所以这里创建一个新对象，只取账户密码邮箱，并设置初始化角色(MEMBER
-            User dbUser = new User();
-            dbUser.setAccount(user.getAccount());
-            dbUser.setPassword(Encrypt.encrypt(user.getPassword(),user.getAccount()));
-            dbUser.setSalt(user.getAccount());
-            dbUser.setEmail(user.getEmail());
+            User dbUser = new User(user.getAccount(),Encrypt.encrypt(user.getPassword(),user.getAccount()),user.getEmail(),user.getAccount());
             userService.registerUser(dbUser);
             return new Response(200,"已成功注册");
         }catch (RegisterException e){
@@ -80,6 +76,7 @@ public class UserController {
         userService.registerUser(user);
         return new Response(200,"成功添加用户");
     }
+    //检查当前用户的权限
 
     @ExceptionHandler(AuthorizationException.class)
     public Response authorExceptionHandler(AuthorizationException e){

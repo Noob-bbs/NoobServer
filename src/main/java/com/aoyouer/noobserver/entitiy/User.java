@@ -1,5 +1,7 @@
 package com.aoyouer.noobserver.entitiy;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
@@ -16,6 +18,7 @@ public class User {
     private String email;
     private String salt;
     //用户所具有的角色
+    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     @OneToMany(targetEntity = Role.class)
     private Set<Role> roleSet;
 
