@@ -23,6 +23,15 @@ public class User {
         //this.roleSet.add(new Role("MEMBER"));
     }
 
+    public User(String account, String password, String email, String salt) {
+        this.account = account;
+        this.password = password;
+        this.email = email;
+        this.salt = salt;
+        this.roleSet = new HashSet<>();
+        this.roleSet.add(new Role("MEMBER"));
+    }
+
     public Long getId() {
         return id;
     }

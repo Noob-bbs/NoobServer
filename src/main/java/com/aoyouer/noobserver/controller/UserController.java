@@ -10,6 +10,7 @@ import com.sun.xml.bind.v2.TODO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
@@ -44,10 +45,6 @@ public class UserController {
     @PostMapping(value = "/register")
     public Response register(@RequestBody User user){
         try {
-            //用账户作为盐
-            user.setPassword(Encrypt.encrypt(user.getPassword(),user.getAccount()));
-            //添加用户到数据库中，这里可能会抛出异常——账户重名(其实还应该检查一下输入的合法性，虽然前端可以检查，但是有可能被绕过
-            user.setSalt(user.getAccount());
             //关于角色这部分，暂时只作为测试使用
             //TODO 用户默认为普通用户
             if (user.getRoleSet() == null){
@@ -56,7 +53,13 @@ public class UserController {
             else {
                 System.out.println("角色集非空" + user.getRoleSet().toString());
             }
-            userService.registerUser(user);
+            //为了防止构造请求直接修改了权限，所以这里创建一个新对象，只取账户密码邮箱，并设置初始化角色(MEMBER
+            User dbUser = new User();
+            dbUser.setAccount(user.getAccount());
+            dbUser.setPassword(Encrypt.encrypt(user.getPassword(),user.getAccount()));
+            dbUser.setSalt(user.getAccount());
+            dbUser.setEmail(user.getEmail());
+            userService.registerUser(dbUser);
             return new Response(200,"已成功注册");
         }catch (RegisterException e){
             return new Response(400,e);
@@ -72,10 +75,15 @@ public class UserController {
 
     //添加用户
     @PostMapping(value = "/adduser")
-    @RequiresRoles(value = {"ADMIN","MANAGER"},logical = Logical.OR)
+    @RequiresRoles(value = {"ADMIN","MANAGER","MEMBER"},logical = Logical.OR)
     public Response addUser(@RequestBody User user){
         userService.registerUser(user);
         return new Response(200,"成功添加用户");
+    }
+
+    @ExceptionHandler(AuthorizationException.class)
+    public Response authorExceptionHandler(AuthorizationException e){
+        return new Response(403,"授权验证失败" + e.getMessage());
     }
 
 }

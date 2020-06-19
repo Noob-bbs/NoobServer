@@ -37,6 +37,7 @@ public class NoobRealm extends AuthorizingRealm {
         System.out.println(principalCollection);
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         //??? 可以这样取出当前会话的用户对象吗？
+        //TODO 研究这里面到底是什么
         logger.info("principalCollection.getPrimaryPrincipal()" + principalCollection.toString());
         User user = userService.getUserByAccount(principalCollection.getPrimaryPrincipal().toString());
         logger.info("授权中:" + user.getAccount());

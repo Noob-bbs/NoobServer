@@ -62,6 +62,7 @@ public class ShiroConfig {
         return noobRealm;
     }
 
+    //注意这里，将用户的密码和数据库中的盐进行hash加密，算法和次数要和注册的时候加密时设置的一样
     @Bean
     public HashedCredentialsMatcher hashedCredentialsMatcher() {
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
