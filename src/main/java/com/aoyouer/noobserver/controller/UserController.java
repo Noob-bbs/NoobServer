@@ -12,6 +12,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
@@ -74,10 +75,18 @@ public class UserController {
     @RequiresRoles(value = {"ADMIN","MANAGER","MEMBER"},logical = Logical.OR)
     public Response addUser(@RequestBody User user){
         userService.registerUser(user);
+
         return new Response(200,"成功添加用户");
     }
-    //检查当前用户的权限
+    //检查当前用户信息
+    @GetMapping(value = "/me")
+    @RequiresAuthentication
+    public Response whoami(){
+        String userAccount = (String) SecurityUtils.getSubject().getPrincipal();
+        return new Response(200,userService.getUserByAccount(userAccount));
+    }
 
+    //授权失败异常处理(即权限不足)
     @ExceptionHandler(AuthorizationException.class)
     public Response authorExceptionHandler(AuthorizationException e){
         return new Response(403,"授权验证失败" + e.getMessage());
