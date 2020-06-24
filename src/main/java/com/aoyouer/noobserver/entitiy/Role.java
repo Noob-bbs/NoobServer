@@ -15,7 +15,7 @@ public class Role {
     private String roleName;
     @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     @OneToMany(targetEntity = Permission.class)
-    private Set<Permission> permissionSet = new HashSet<>();
+    private Set<Permission> permissionSet = new HashSet<>();    //不保证顺序
 
     public Role() {
     }
