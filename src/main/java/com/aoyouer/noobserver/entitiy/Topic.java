@@ -1,6 +1,5 @@
 package com.aoyouer.noobserver.entitiy;
 
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
