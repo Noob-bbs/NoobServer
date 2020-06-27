@@ -23,7 +23,7 @@ public class Role {
     public Role(String roleName) {
         this.roleName = roleName;
         //TODO 如果需要细分权限的话，在这里根据初始化时的roleName设置permissionSet
-        this.permissionSet = new HashSet<Permission>(){{
+        this.permissionSet = new HashSet<>(){{
             add(new Permission());
         }};
     }
