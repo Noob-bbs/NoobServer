@@ -38,13 +38,14 @@ public class User {
         //this.roleSet.add(new Role("MEMBER"));
     }
 
-    public User(String account, String password, String email, String salt) {
+    public User(String account, String password, String email,String nick ,String salt) {
         this.account = account;
         this.password = password;
         this.email = email;
         this.salt = salt;
         this.roleSet = new HashSet<>();
         this.roleSet.add(new Role("MEMBER"));
+        this.nick = nick;
     }
 
     public Long getId() {
