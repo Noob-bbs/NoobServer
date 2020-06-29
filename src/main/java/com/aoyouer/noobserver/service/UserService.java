@@ -18,7 +18,13 @@ public class UserService {
         //可以先判断合法性
         //首先要查看是否有同名用户
         User duser = userRepository.getUserByAccount(user.getAccount());
-        if (duser != null) throw new RegisterException("用户名已被占用");
-        userRepository.save(user);
+        if (duser != null) {
+            System.out.println("用户名已经被占用");
+            throw new RegisterException("用户名已被占用");
+        }
+        else {
+            userRepository.save(user);
+        }
     }
 }
+

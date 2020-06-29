@@ -4,5 +4,5 @@ import com.aoyouer.noobserver.entitiy.Post;
 import org.springframework.data.repository.CrudRepository;
 
 public interface PostRepository extends CrudRepository<Post, Long> {
-    Post getPostByUser();
+    //Post getPostByUser();
 }

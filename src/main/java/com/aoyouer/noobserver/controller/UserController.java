@@ -40,7 +40,7 @@ public class UserController {
             subject.login(usernamePasswordToken);
             return new Response(200,"登陆成功:" + account);
         }catch (AuthenticationException e){
-            return new Response(200,"登陆失败");
+            return new Response(201,"登陆失败");
         }
     }
     //用户注册
@@ -56,11 +56,11 @@ public class UserController {
                 System.out.println("角色集非空" + user.getRoleSet().toString());
             }
             //为了防止构造请求直接修改了权限，所以这里创建一个新对象，只取账户密码邮箱，并设置初始化角色(MEMBER
-            User dbUser = new User(user.getAccount(),Encrypt.encrypt(user.getPassword(),user.getAccount()),user.getEmail(),user.getAccount());
+            User dbUser = new User(user.getAccount(),Encrypt.encrypt(user.getPassword(),user.getAccount()),user.getNick(),user.getEmail(),user.getAccount());
             userService.registerUser(dbUser);
             return new Response(200,"已成功注册");
-        }catch (RegisterException e){
-            return new Response(400,e);
+        }catch (Exception e){
+            return new Response(400,e.getMessage());
         }
     }
     //登出账号
