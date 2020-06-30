@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 import java.util.Set;
 
 @RestController
-@RequestMapping(path = "/topic")
+@RequestMapping(path = "/api")
 public class TopicController {
     @Resource
     TopicService topicService;
@@ -21,7 +21,7 @@ public class TopicController {
     @Resource
     UserService userService;
 
-    @PostMapping(value = "/list")
+    @GetMapping(value = "/topic/list")
     public Response show(@RequestParam int pageSize,@RequestParam int pageNum
             ,@RequestParam String type) {
         Page<Topic> page = topicService.getTopicsByTypeAndPage(pageSize, pageNum, type);
@@ -33,16 +33,13 @@ public class TopicController {
         }
     }
 
-    @PostMapping(value = "/create")
-    public Response createTopic(@RequestParam long userId, @RequestParam String title,
-                                @RequestParam String content, @RequestParam Set<String> tags,
-                                @RequestParam String type) {
-        if (userService.getUserById(userId) == null) {
+    @PostMapping(value = "/topic/create")
+    public Response createTopic(@RequestBody Topic topic) {
+        if (userService.getUserById(topic.getUserId()) == null) {
             return new Response(202, "没有检测到您的用户id，请登录");
         }
-        Topic topic = new Topic(title, type, tags);
-        Post post = new Post(content, System.currentTimeMillis(),
-                0, userService.getUserById(userId));
+        Post post = new Post(topic.getContent(), System.currentTimeMillis(),
+                0, userService.getUserById(topic.getUserId()));
         topic.addPost(post);
         topicService.saveTopic(topic);
         return new Response(200, "发帖成功");
