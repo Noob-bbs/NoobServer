@@ -31,15 +31,18 @@ public class UserController {
     UserService userService;
     //关于用户登录
     @PostMapping(value = "/login")
-    public Response login(@RequestParam String account, @RequestParam String password){
+    public Response login(@RequestBody User user){
+        String account = user.getAccount();
+        String password = user.getPassword();
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(account,password);
         try{
             subject.login(usernamePasswordToken);
-            User user = userService.getUserByAccount(account);
-            user.setPassword("");
-            user.setSalt("");
-            return new Response(200,user);
+            User dbUser = userService.getUserByAccount(account);
+            dbUser.setPassword("");
+            dbUser.setSalt("");
+            System.out.println("成功登录" + dbUser.getEmail());
+            return new Response(200,dbUser);
         }catch (AuthenticationException e){
             return new Response(201,"登陆失败");
         }
@@ -57,7 +60,7 @@ public class UserController {
                 System.out.println("角色集非空" + user.getRoleSet().toString());
             }
             //为了防止构造请求直接修改了权限，所以这里创建一个新对象，只取账户密码邮箱，并设置初始化角色(MEMBER
-            User dbUser = new User(user.getAccount(),Encrypt.encrypt(user.getPassword(),user.getAccount()),user.getNick(),user.getEmail(),user.getAccount());
+            User dbUser = new User(user.getAccount(),Encrypt.encrypt(user.getPassword(),user.getAccount()),user.getEmail(),user.getNick(),user.getAccount());
             userService.registerUser(dbUser);
             return new Response(200,"已成功注册");
         }catch (Exception e){

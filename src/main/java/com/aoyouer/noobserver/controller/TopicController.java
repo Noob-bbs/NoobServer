@@ -21,21 +21,8 @@ public class TopicController {
     @Resource
     UserService userService;
 
-    //得到整个TopicList
-    @GetMapping(value = "/list")
-    public Response show(@RequestParam int pageSize,@RequestParam int pageNum) {
-        Page<Topic> page = topicService.getTopicsByPage(pageSize, pageNum);
-        try {
-            return new Response(200,
-                    new TopicPage(pageSize, pageNum, page.getContent()));
-        } catch (Exception e) {
-            return new Response(400, "页面获取失败");
-        }
-    }
-
-    //通过类型返回列表页
-    @GetMapping(value = "/findByType")
-    public Response getPageByType(@RequestParam int pageSize,@RequestParam int pageNum
+    @PostMapping(value = "/list")
+    public Response show(@RequestParam int pageSize,@RequestParam int pageNum
             ,@RequestParam String type) {
         Page<Topic> page = topicService.getTopicsByTypeAndPage(pageSize, pageNum, type);
         try {
@@ -62,6 +49,9 @@ public class TopicController {
                              @RequestParam String content, @RequestParam Set<String> tags,
                              @RequestParam String type) {
         if (userService.getUserById(userId) == null) {
+    @PostMapping(value = "/topic/create")
+    public Response createTopic(@RequestBody Topic topic) {
+        if (userService.getUserById(topic.getUserId()) == null) {
             return new Response(202, "没有检测到您的用户id，请登录");
         }
         Topic topic = new Topic(title, type, tags);
