@@ -37,6 +37,8 @@ public class UserController {
         try{
             subject.login(usernamePasswordToken);
             User user = userService.getUserByAccount(account);
+            user.setPassword("");
+            user.setSalt("");
             return new Response(200,user);
         }catch (AuthenticationException e){
             return new Response(201,"登陆失败");

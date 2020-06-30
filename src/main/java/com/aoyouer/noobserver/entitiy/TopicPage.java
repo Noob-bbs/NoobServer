@@ -52,4 +52,12 @@ public class TopicPage {
     public void setTopicList(List<Topic> topicList) {
         this.topicList = topicList;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }

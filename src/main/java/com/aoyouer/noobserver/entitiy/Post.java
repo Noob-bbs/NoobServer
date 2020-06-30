@@ -17,6 +17,16 @@ public class Post {
     @OneToOne(targetEntity = User.class)
     private User user;
 
+    public Post() {
+    }
+
+    public Post(String content, long time, int likeNum, User user) {
+        this.content = content;
+        this.likeNum = likeNum;
+        this.time = time;
+        this.user = user;
+    }
+
     public long getId() {
         return id;
     }

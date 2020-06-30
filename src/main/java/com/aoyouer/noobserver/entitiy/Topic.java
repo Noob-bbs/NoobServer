@@ -78,4 +78,8 @@ public class Topic {
     public User getUser() {
         return postList.get(0).getUser();
     }
+
+    public void addPost(Post post) {
+        postList.add(post);
+    }
 }
