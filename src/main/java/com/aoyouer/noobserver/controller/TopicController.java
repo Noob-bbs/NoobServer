@@ -21,10 +21,21 @@ public class TopicController {
     @Resource
     UserService userService;
 
-    @PostMapping(value = "/topic/list")
-    public Response show(@RequestParam int pageSize,@RequestParam int pageNum
+    @GetMapping(value = "/topic/listbytype")
+    public Response getListByType(@RequestParam int pageSize,@RequestParam int pageNum
             ,@RequestParam String type) {
         Page<Topic> page = topicService.getTopicsByTypeAndPage(pageSize, pageNum, type);
+        try {
+            return new Response(200,
+                    new TopicPage(pageSize, pageNum, page.getContent()));
+        } catch (Exception e) {
+            return new Response(400, "页面获取失败");
+        }
+    }
+
+    @GetMapping(value = "/topic/list")
+    public Response getTopicList(@RequestParam int pageSize,@RequestParam int pageNum) {
+        Page<Topic> page = topicService.getTopicsByPage(pageSize, pageNum);
         try {
             return new Response(200,
                     new TopicPage(pageSize, pageNum, page.getContent()));
