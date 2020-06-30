@@ -21,7 +21,7 @@ public class TopicController {
     @Resource
     UserService userService;
 
-    @PostMapping(value = "/topic/list")
+    @GetMapping(value = "/topic/list")
     public Response show(@RequestParam int pageSize,@RequestParam int pageNum
             ,@RequestParam String type) {
         Page<Topic> page = topicService.getTopicsByTypeAndPage(pageSize, pageNum, type);
