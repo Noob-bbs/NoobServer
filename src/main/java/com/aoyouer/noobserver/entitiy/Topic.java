@@ -17,6 +17,9 @@ public class Topic {
     private String content;
     private String type;        //板块类型
 
+    private long createTime;
+    private long updateTime;
+
     @ElementCollection
     private Set<String> tags;
     //评论数量为list的数量，内容为list第一楼的内容,一切皆为第一楼的（包括User）
@@ -27,13 +30,16 @@ public class Topic {
     public Topic() {
     }
 
-    public Topic(String title, String type, Set<String> tags, Long userId, String content) {
+    public Topic(String title, String type, Set<String> tags, Long userId
+            , String content, long createTime, long updateTime) {
         this.userId = userId;
         this.title = title;
         this.type = type;
         this.tags = new HashSet<>();
         this.tags.addAll(tags);
         this.content = content;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
     }
 
     public long getId() {
@@ -101,4 +107,19 @@ public class Topic {
     }
 
 
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
+    }
+
+    public long getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(long updateTime) {
+        this.updateTime = updateTime;
+    }
 }

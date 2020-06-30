@@ -21,13 +21,13 @@ public class TopicService {
 
     @Transactional
     public Page<Topic> getTopicsByTypeAndPage(int pageSize, int pageNum, String type) {
-        Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by("time").descending());
+        Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by("updateTime").descending());
         return topicRepository.findAllByType(type, pageable);
     }
 
     @Transactional
     public Page<Topic> getTopicsByPage(int pageSize, int pageNum) {
-        Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by("time").descending());
+        Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by("updateTime").descending());
         return topicRepository.findAll(pageable);
     }
 
@@ -56,5 +56,9 @@ public class TopicService {
 
     public int getTopicListSize() {
         return topicRepository.findAll().size();
+    }
+
+    public Topic getTopicById(long id) {
+        return topicRepository.getTopicById(id);
     }
 }

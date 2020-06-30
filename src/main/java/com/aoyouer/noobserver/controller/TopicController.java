@@ -63,7 +63,7 @@ public class TopicController {
         User user = userService.getUserById(topic.getUserId());
         Post post = new Post(topic.getContent(), System.currentTimeMillis(),
                 0, topic.getUserId(), user.getAccount()
-                , user.getNick(), user.getAvatarUrl());
+                , user.getNick(), user.getAvatarUrl(), topic.getId());
         topic.addPost(post);
         topicService.saveTopic(topic);
         return new Response(200, "发帖成功");

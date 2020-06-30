@@ -22,11 +22,13 @@ public class Post {
 
     private String avatarUrl;
 
+    private long topicId;
+
     public Post() {
     }
 
     public Post(String content, long time, int likeNum, long userId
-            , String account, String nick, String avatarUrl) {
+            , String account, String nick, String avatarUrl, long topicId) {
         this.content = content;
         this.likeNum = likeNum;
         this.time = time;
@@ -99,5 +101,13 @@ public class Post {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    public long getTopicId() {
+        return topicId;
+    }
+
+    public void setTopicId(long topicId) {
+        this.topicId = topicId;
     }
 }
