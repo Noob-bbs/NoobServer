@@ -5,6 +5,7 @@ import com.aoyouer.noobserver.repository.TopicRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,13 +21,13 @@ public class TopicService {
 
     @Transactional
     public Page<Topic> getTopicsByTypeAndPage(int pageSize, int pageNum, String type) {
-        Pageable pageable = PageRequest.of(pageNum, pageSize);
+        Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by("time").descending());
         return topicRepository.findAllByType(type, pageable);
     }
 
     @Transactional
     public Page<Topic> getTopicsByPage(int pageSize, int pageNum) {
-        Pageable pageable = PageRequest.of(pageNum, pageSize);
+        Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by("time").descending());
         return topicRepository.findAll(pageable);
     }
 
