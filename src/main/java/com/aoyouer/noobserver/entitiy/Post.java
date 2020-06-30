@@ -14,17 +14,26 @@ public class Post {
 
     private int likeNum;
 
-    @OneToOne(targetEntity = User.class)
-    private User user;
+    private long userId;
+
+    private String account;
+
+    private String nick;
+
+    private String avatarUrl;
 
     public Post() {
     }
 
-    public Post(String content, long time, int likeNum, User user) {
+    public Post(String content, long time, int likeNum, long userId
+            , String account, String nick, String avatarUrl) {
         this.content = content;
         this.likeNum = likeNum;
         this.time = time;
-        this.user = user;
+        this.userId = userId;
+        this.account = account;
+        this.nick = nick;
+        this.avatarUrl = avatarUrl;
     }
 
     public long getId() {
@@ -60,11 +69,35 @@ public class Post {
     }
 
 
-    public User getUser() {
-        return user;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getNick() {
+        return nick;
+    }
+
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 }

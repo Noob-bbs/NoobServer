@@ -3,6 +3,7 @@ package com.aoyouer.noobserver.controller;
 import com.aoyouer.noobserver.entitiy.Post;
 import com.aoyouer.noobserver.entitiy.Topic;
 import com.aoyouer.noobserver.entitiy.TopicPage;
+import com.aoyouer.noobserver.entitiy.User;
 import com.aoyouer.noobserver.service.TopicService;
 import com.aoyouer.noobserver.service.UserService;
 import com.aoyouer.noobserver.utils.Response;
@@ -10,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Set;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -60,8 +60,10 @@ public class TopicController {
         if (userService.getUserById(topic.getUserId()) == null) {
             return new Response(202, "没有检测到您的用户id，请登录");
         }
+        User user = userService.getUserById(topic.getUserId());
         Post post = new Post(topic.getContent(), System.currentTimeMillis(),
-                0, userService.getUserById(topic.getUserId()));
+                0, topic.getUserId(), user.getAccount()
+                , user.getNick(), user.getAvatarUrl());
         topic.addPost(post);
         topicService.saveTopic(topic);
         return new Response(200, "发帖成功");
