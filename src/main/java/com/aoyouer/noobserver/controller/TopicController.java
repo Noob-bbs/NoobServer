@@ -22,7 +22,7 @@ public class TopicController {
     UserService userService;
 
     //得到整个TopicList
-    @PostMapping(value = "/list")
+    @GetMapping(value = "/list")
     public Response show(@RequestParam int pageSize,@RequestParam int pageNum) {
         Page<Topic> page = topicService.getTopicsByPage(pageSize, pageNum);
         try {
