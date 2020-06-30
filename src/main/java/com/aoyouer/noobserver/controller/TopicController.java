@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 import java.util.Set;
 
 @RestController
-@RequestMapping(path = "/topic")
+@RequestMapping(path = "/api")
 public class TopicController {
     @Resource
     TopicService topicService;
@@ -21,7 +21,7 @@ public class TopicController {
     @Resource
     UserService userService;
 
-    @PostMapping(value = "/list")
+    @PostMapping(value = "/topic/list")
     public Response show(@RequestParam int pageSize,@RequestParam int pageNum
             ,@RequestParam String type) {
         Page<Topic> page = topicService.getTopicsByTypeAndPage(pageSize, pageNum, type);
@@ -34,7 +34,7 @@ public class TopicController {
     }
 
     //得到所有标签以及每个标签之下的主题数量
-    @GetMapping(value = "/getTagsMap")
+    @GetMapping(value = "/gettags")
     public Response getTagsMap() {
         try {
             return new Response(200, topicService.getTagsInfo());
@@ -44,7 +44,7 @@ public class TopicController {
     }
 
     //新建主题帖
-    @PostMapping(value = "/addTopic")
+    @PostMapping(value = "/topic/create")
     public Response createTopic(@RequestBody Topic topic) {
         if (userService.getUserById(topic.getUserId()) == null) {
             return new Response(202, "没有检测到您的用户id，请登录");
@@ -57,7 +57,7 @@ public class TopicController {
     }
 
     //得到主题帖数量
-    @GetMapping(value = "/getPostNum")
+    @GetMapping(value = "/topic/getpostsnum")
     public Response getPostNum() {
         return new Response(200, topicService.getTopicListSize());
     }
