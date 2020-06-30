@@ -89,6 +89,12 @@ public class UserController {
         return new Response(200,userService.getUserByAccount(userAccount));
     }
 
+    //返回用户数量
+    @GetMapping(value = "/getUserNum")
+    public Response getUserNum() {
+        return new Response(200, userService.getUserNum());
+    }
+
     //授权失败异常处理(即权限不足)
     @ExceptionHandler(AuthorizationException.class)
     public Response authorExceptionHandler(AuthorizationException e){

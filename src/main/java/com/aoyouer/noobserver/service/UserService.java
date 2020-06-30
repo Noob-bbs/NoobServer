@@ -27,6 +27,10 @@ public class UserService {
         }
     }
 
+    public int getUserNum() {
+        return userRepository.findAll().size();
+    }
+
     public User getUserById(long id) {
         return userRepository.getUserById(id);
     }

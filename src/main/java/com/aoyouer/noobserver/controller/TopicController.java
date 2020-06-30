@@ -21,8 +21,21 @@ public class TopicController {
     @Resource
     UserService userService;
 
+    //得到整个TopicList
     @PostMapping(value = "/list")
-    public Response show(@RequestParam int pageSize,@RequestParam int pageNum
+    public Response show(@RequestParam int pageSize,@RequestParam int pageNum) {
+        Page<Topic> page = topicService.getTopicsByPage(pageSize, pageNum);
+        try {
+            return new Response(200,
+                    new TopicPage(pageSize, pageNum, page.getContent()));
+        } catch (Exception e) {
+            return new Response(400, "页面获取失败");
+        }
+    }
+
+    //通过类型返回列表页
+    @GetMapping(value = "/findByType")
+    public Response getPageByType(@RequestParam int pageSize,@RequestParam int pageNum
             ,@RequestParam String type) {
         Page<Topic> page = topicService.getTopicsByTypeAndPage(pageSize, pageNum, type);
         try {
@@ -33,10 +46,21 @@ public class TopicController {
         }
     }
 
-    @PostMapping(value = "/create")
-    public Response createTopic(@RequestParam long userId, @RequestParam String title,
-                                @RequestParam String content, @RequestParam Set<String> tags,
-                                @RequestParam String type) {
+    //得到所有标签以及每个标签之下的主题数量
+    @GetMapping(value = "/getTagsMap")
+    public Response getTagsMap() {
+        try {
+            return new Response(200, topicService.getTagsInfo());
+        } catch (Exception e) {
+            return new Response(400, e.getMessage());
+        }
+    }
+
+    //新建主题帖
+    @PostMapping(value = "/addTopic")
+    public Response addTopic(@RequestParam long userId, @RequestParam String title,
+                             @RequestParam String content, @RequestParam Set<String> tags,
+                             @RequestParam String type) {
         if (userService.getUserById(userId) == null) {
             return new Response(202, "没有检测到您的用户id，请登录");
         }
@@ -47,4 +71,16 @@ public class TopicController {
         topicService.saveTopic(topic);
         return new Response(200, "发帖成功");
     }
+
+    //得到主题帖数量
+    @GetMapping(value = "/getPostNum")
+    public Response getPostNum() {
+        return new Response(200, topicService.getTopicListSize());
+    }
+
+//    //得到标签数量
+//    @GetMapping(value = "/getTagNum")
+//    public Response getTagNum() {
+//        return new Response(200, topicService.getTopicListSize());
+//    }
 }
