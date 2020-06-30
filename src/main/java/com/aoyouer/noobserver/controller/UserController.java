@@ -31,14 +31,16 @@ public class UserController {
     UserService userService;
     //关于用户登录
     @PostMapping(value = "/login")
-    public Response login(@RequestParam String account, @RequestParam String password){
+    public Response login(@RequestBody User user){
+        String account = user.getAccount();
+        String password = user.getPassword();
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(account,password);
         try{
             subject.login(usernamePasswordToken);
-            User user = userService.getUserByAccount(account);
-            user.setPassword("");
-            user.setSalt("");
+            User dbUser = userService.getUserByAccount(account);
+            dbUser.setPassword("");
+            dbUser.setSalt("");
             return new Response(200,user);
         }catch (AuthenticationException e){
             return new Response(201,"登陆失败");
