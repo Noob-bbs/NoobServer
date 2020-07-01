@@ -61,4 +61,12 @@ public class TopicService {
     public Topic getTopicById(long id) {
         return topicRepository.getTopicById(id);
     }
+
+    public List<Topic> getAllByType(String type) {
+        return topicRepository.findAllByType(type);
+    }
+
+    public List<Topic> getAll() {
+        return topicRepository.findAll();
+    }
 }

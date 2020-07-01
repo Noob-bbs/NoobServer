@@ -31,16 +31,22 @@ public class PostController {
             , @RequestParam long topicId) {
         Topic topic = topicService.getTopicById(topicId);
         if (topic == null) {
-            return new Response(400, "该主题帖id不存在");
+            return new Response(201, "该主题帖id不存在");
         } else {
             return new Response(200, topic);
         }
     }
 
-//    @PostMapping(value = "/post/addpost")
-//    public Response addPost(@RequestBody Post post) {
-//        if (userService.getUserById(post.getUserId()) == null) {
-//            return new Response(202, "没有检测到您的用户id，请登录");
-//        }
-//    }
+    @PostMapping(value = "/post/addpost")
+    public Response addPost(@RequestBody Post post) {
+        Topic topic = topicService.getTopicById(post.getTopicId());
+        if (userService.getUserById(post.getUserId()) == null) {
+            return new Response(202, "没有检测到您的用户id，请登录");
+        } else if (topic == null) {
+            return new Response(203, "你回复的主题帖id有问题。");
+        }
+        topic.addPost(post);
+        topic.setUpdateTime(post.getTime());
+        return new Response(200, topic);
+    }
 }

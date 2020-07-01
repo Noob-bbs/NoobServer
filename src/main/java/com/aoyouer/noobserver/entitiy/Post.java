@@ -36,6 +36,7 @@ public class Post {
         this.account = account;
         this.nick = nick;
         this.avatarUrl = avatarUrl;
+        this.topicId = topicId;
     }
 
     public long getId() {

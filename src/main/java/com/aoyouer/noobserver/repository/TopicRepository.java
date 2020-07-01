@@ -15,4 +15,6 @@ public interface TopicRepository extends PagingAndSortingRepository<Topic, Long>
     List<Topic> findAll();
 
     Topic getTopicById(long id);
+
+    List<Topic> findAllByType(String type);
 }

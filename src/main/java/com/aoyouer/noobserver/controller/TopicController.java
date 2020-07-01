@@ -25,9 +25,15 @@ public class TopicController {
     public Response getListByType(@RequestParam int pageSize,@RequestParam int pageNum
             ,@RequestParam String type) {
         Page<Topic> page = topicService.getTopicsByTypeAndPage(pageSize, pageNum, type);
+        int lastPage;
+        if (topicService.getAllByType(type).size() % pageSize == 0) {
+            lastPage = topicService.getAllByType(type).size() / pageSize;
+        } else {
+            lastPage = topicService.getAllByType(type).size() / pageSize + 1;
+        }
         try {
             return new Response(200,
-                    new TopicPage(pageSize, pageNum, page.getContent()));
+                    new TopicPage(pageSize, pageNum, lastPage, page.getContent()));
         } catch (Exception e) {
             return new Response(400, "页面获取失败");
         }
@@ -36,9 +42,15 @@ public class TopicController {
     @GetMapping(value = "/topic/list")
     public Response getTopicList(@RequestParam int pageSize,@RequestParam int pageNum) {
         Page<Topic> page = topicService.getTopicsByPage(pageSize, pageNum);
+        int lastPage;
+        if (topicService.getAll().size() % pageSize == 0) {
+            lastPage = topicService.getAll().size() / pageSize;
+        } else {
+            lastPage = topicService.getAll().size() / pageSize + 1;
+        }
         try {
             return new Response(200,
-                    new TopicPage(pageSize, pageNum, page.getContent()));
+                    new TopicPage(pageSize, pageNum, lastPage, page.getContent()));
         } catch (Exception e) {
             return new Response(400, "页面获取失败");
         }
