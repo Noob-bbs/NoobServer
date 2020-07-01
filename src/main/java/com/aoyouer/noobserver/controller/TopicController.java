@@ -108,4 +108,14 @@ public class TopicController {
             return new Response(203, e.getMessage());
         }
     }
+
+    @GetMapping(value = "/topic/listbytag")
+    public Response deleteTopic(@RequestParam int pageSize,@RequestParam int pageNum
+            , @RequestParam String tag) {
+        try {
+            return new Response(200, topicService.getTopicByTag(pageSize, pageNum, tag));
+        } catch (ArrayIndexOutOfBoundsException e) {    //我在这里已进行错误处理
+            return new Response(203, e.getMessage());
+        }
+    }
 }

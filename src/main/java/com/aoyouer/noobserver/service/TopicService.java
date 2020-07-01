@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,41 @@ public class TopicService {
             }
         }
         return tagsInfo;
+    }
+
+    public List<Topic> getTopicByTag(int pageSize, int pageNum, String tag) {
+        List<Topic> topics = new ArrayList<>();
+        List<Topic> desList = topicRepository.findAll(Sort.by("updateTime").descending());
+        for (Topic topic :
+                desList) {
+            for (String s :
+                    topic.getTags()) {
+                if (tag.equals(s)) {
+                    topics.add(topic);
+                    break;
+                }
+            }
+        }
+        return cutList(pageSize, pageNum, topics);
+    }
+
+    private List<Topic> cutList(int size, int pageNum, List<Topic> topics) {
+        int lastPage = topics.size();
+        int mod = lastPage % size;
+        int factor = lastPage / size;
+        int pageCount;
+        if (mod == 0) {
+            pageCount = factor;
+        } else {
+            pageCount = factor + 1;
+        }
+        if (pageNum > pageCount - 1) {
+            throw new ArrayIndexOutOfBoundsException("pageNum out of bound");
+        }
+        if (pageCount != factor && pageCount == pageNum + 1) {
+            return topics.subList(pageNum * size, topics.size());
+        }
+        return topics.subList(pageNum * size, (pageNum + 1) * size);
     }
 
     public void saveTopic(Topic topic) {
