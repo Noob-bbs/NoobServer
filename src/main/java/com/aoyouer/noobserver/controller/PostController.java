@@ -49,4 +49,18 @@ public class PostController {
         topic.setUpdateTime(post.getTime());
         return new Response(200, topic);
     }
+
+//    @GetMapping(value = "/topic/deletetopic")
+//    public Response deleteTopic(@RequestParam long userId,@RequestParam long topicId) {
+//        Topic topic = topicService.getTopicById(topicId);
+//        if (topic.getUserId() != userId) {
+//            return new Response(202, "您没有删除该贴的权限。");
+//        }
+//        try {
+//            topicService.deleteById(topicId);
+//            return new Response(200, "删帖成功");
+//        } catch (Exception e) {
+//            return new Response(203, e.getMessage());
+//        }
+//    }
 }

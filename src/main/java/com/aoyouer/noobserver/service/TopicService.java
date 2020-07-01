@@ -27,7 +27,8 @@ public class TopicService {
 
     @Transactional
     public Page<Topic> getTopicsByPage(int pageSize, int pageNum) {
-        Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by("updateTime").descending());
+        Sort sort = Sort.by(Sort.Direction.DESC, "updateTime");
+        Pageable pageable = PageRequest.of(pageNum, pageSize, sort);
         return topicRepository.findAll(pageable);
     }
 
