@@ -23,5 +23,6 @@ public interface TopicRepository extends PagingAndSortingRepository<Topic, Long>
 
     List<Topic> findAll(Sort sort);
 
+    List<Topic> findAllByUserId(long userId);
 
 }

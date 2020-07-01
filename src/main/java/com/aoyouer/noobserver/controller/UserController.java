@@ -6,6 +6,7 @@ import com.aoyouer.noobserver.exception.RegisterException;
 import com.aoyouer.noobserver.service.UserService;
 import com.aoyouer.noobserver.utils.Encrypt;
 import com.aoyouer.noobserver.utils.Response;
+import com.google.inject.internal.cglib.core.$Customizer;
 import com.sun.xml.bind.v2.TODO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -93,7 +94,7 @@ public class UserController {
     }
 
     //返回用户数量
-    @GetMapping(value = "/getUserNum")
+    @GetMapping(value = "/getusernum")
     public Response getUserNum() {
         return new Response(200, userService.getUserNum());
     }

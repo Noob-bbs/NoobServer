@@ -2,6 +2,8 @@ package com.aoyouer.noobserver.controller;
 
 import com.aoyouer.noobserver.entitiy.Post;
 import com.aoyouer.noobserver.entitiy.Topic;
+import com.aoyouer.noobserver.entitiy.User;
+import com.aoyouer.noobserver.entitiy.UserPage;
 import com.aoyouer.noobserver.repository.PostRepository;
 import com.aoyouer.noobserver.repository.TopicRepository;
 import com.aoyouer.noobserver.service.PostService;
@@ -72,6 +74,19 @@ public class PostController {
         } catch (Exception e) {
             return new Response(400, e.getMessage());
         }
+    }
+
+    //得到用户信息
+    @GetMapping(value = "/getuserinfo")
+    public Response getUserInfo(@RequestParam long userId) {
+        User user = userService.getUserById(userId);
+        if (user == null) {
+            return new Response(202, "该用户不存在");
+        }
+        int postNum = postService.getPostsByUserId(userId).size();
+        int topicNum = topicService.getTopicsByUserId(userId).size();
+        int likeNum = postService.getLikeNumByUserId(userId);
+        return new Response(200, new UserPage(topicNum, postNum, likeNum, user));
     }
 
 //    @GetMapping(value = "/post/searchpost")

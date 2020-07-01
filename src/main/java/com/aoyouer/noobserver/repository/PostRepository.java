@@ -7,6 +7,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import java.util.List;
+
 public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
     //Post getPostByUser();
     void deleteById(Long id);
@@ -14,4 +16,6 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
     Post getPostById(long id);
 
     Page<Post> findAll(Pageable pageable);
+
+    List<Post> findAllByUserId(long userId);
 }

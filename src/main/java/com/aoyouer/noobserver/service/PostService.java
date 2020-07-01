@@ -28,4 +28,18 @@ public class PostService {
         Pageable pageable = PageRequest.of(0 , 10, Sort.by("time").descending());
         return postRepository.findAll(pageable);
     }
+
+    public List<Post> getPostsByUserId(long userId) {
+        return postRepository.findAllByUserId(userId);
+    }
+
+    public int getLikeNumByUserId(long userId) {
+        List<Post> postList = postRepository.findAllByUserId(userId);
+        int likeNum = 0;
+        for (Post po :
+                postList) {
+            likeNum = po.getLikeNum() + likeNum;
+        }
+        return likeNum;
+    }
 }
