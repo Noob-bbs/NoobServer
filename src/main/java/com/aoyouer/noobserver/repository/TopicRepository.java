@@ -17,4 +17,6 @@ public interface TopicRepository extends PagingAndSortingRepository<Topic, Long>
     Topic getTopicById(long id);
 
     List<Topic> findAllByType(String type);
+
+    void deleteById(Long id);
 }

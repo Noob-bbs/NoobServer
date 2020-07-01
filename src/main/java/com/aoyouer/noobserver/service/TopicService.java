@@ -69,4 +69,8 @@ public class TopicService {
     public List<Topic> getAll() {
         return topicRepository.findAll();
     }
+
+    public void deleteById(long id) throws Exception{
+        topicRepository.deleteById(id);
+    }
 }
