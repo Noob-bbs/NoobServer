@@ -14,6 +14,7 @@ public class Topic {
     private long id;
     private long userId;
     private String title;
+    @Column(columnDefinition="LONGTEXT")
     private String content;
     private String type;        //板块类型
 

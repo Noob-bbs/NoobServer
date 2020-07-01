@@ -7,7 +7,7 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
+    @Column(columnDefinition="LONGTEXT")
     private String content;
 
     private long time;
