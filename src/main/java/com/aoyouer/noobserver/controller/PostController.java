@@ -47,6 +47,7 @@ public class PostController {
         }
         topic.addPost(post);
         topic.setUpdateTime(post.getTime());
+        topicService.saveTopic(topic);
         return new Response(200, topic);
     }
 
@@ -63,4 +64,16 @@ public class PostController {
             return new Response(203, e.getMessage());
         }
     }
+
+    @GetMapping(value = "/post/getlastpost")
+    public Response getLastPost() {
+        try {
+            return new Response(200, postService.getLastPost().getContent());
+        } catch (Exception e) {
+            return new Response(400, e.getMessage());
+        }
+    }
+
+//    @GetMapping(value = "/post/searchpost")
+//    public Response searchPost(@RequestParam long userId)
 }

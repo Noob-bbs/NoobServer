@@ -22,4 +22,6 @@ public interface TopicRepository extends PagingAndSortingRepository<Topic, Long>
     void deleteById(Long id);
 
     List<Topic> findAll(Sort sort);
+
+
 }
