@@ -9,4 +9,8 @@ import javax.annotation.Resource;
 public class PostService {
     @Resource
     PostRepository postRepository;
+
+    public void deleteById(long id) {
+        postRepository.deleteById(id);
+    }
 }

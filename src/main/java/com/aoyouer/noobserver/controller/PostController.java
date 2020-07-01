@@ -50,8 +50,8 @@ public class PostController {
         return new Response(200, topic);
     }
 
-//    @GetMapping(value = "/topic/deletetopic")
-//    public Response deleteTopic(@RequestParam long userId,@RequestParam long topicId) {
+//    @GetMapping(value = "/post/deletepost")
+//    public Response deleteTopic(@RequestParam long userId,@RequestParam long postId) {
 //        Topic topic = topicService.getTopicById(topicId);
 //        if (topic.getUserId() != userId) {
 //            return new Response(202, "您没有删除该贴的权限。");

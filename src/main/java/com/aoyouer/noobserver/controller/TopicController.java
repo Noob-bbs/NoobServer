@@ -77,6 +77,8 @@ public class TopicController {
                 0, topic.getUserId(), user.getAccount()
                 , user.getNick(), user.getAvatarUrl(), topic.getId());
         topic.addPost(post);
+        topic.setCreateTime(post.getTime());
+        topic.setUpdateTime(post.getTime());
         topicService.saveTopic(topic);
         return new Response(200, "发帖成功");
     }
