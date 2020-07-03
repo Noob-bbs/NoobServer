@@ -89,6 +89,7 @@ public class PostController {
         return new Response(200, new UserPage(topicNum, postNum, likeNum, user));
     }
 
+    //点赞功能
     @GetMapping(value = "/post/addlike")
     public Response addLike(@RequestParam long userId, @RequestParam long postId) {
         int likeNum = postService.getPostById(postId).getLikeNum();
