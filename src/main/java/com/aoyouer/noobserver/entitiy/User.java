@@ -112,6 +112,14 @@ public class User {
         this.avatarUrl = avatarUrl;
     }
 
+    public void setPostList(List<Post> postList) {
+        this.postList = postList;
+    }
+
+    public void setTopicList(List<Topic> topicList) {
+        this.topicList = topicList;
+    }
+
     public List<Topic> getTopicList() {
         return topicList;
     }

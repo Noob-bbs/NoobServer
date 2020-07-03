@@ -88,6 +88,8 @@ public class PostController {
         int likeNum = postService.getLikeNumByUserId(userId);
         user.setSalt("");
         user.setPassword("");
+        user.setTopicList(topicService.getTopicsByUserId(userId));
+        user.setPostList(postService.getPostsByUserId(userId));
         return new Response(200, new UserPage(topicNum, postNum, likeNum, user));
     }
 
