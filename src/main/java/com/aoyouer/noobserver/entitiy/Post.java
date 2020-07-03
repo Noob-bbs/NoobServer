@@ -1,6 +1,8 @@
 package com.aoyouer.noobserver.entitiy;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Post {
@@ -24,6 +26,9 @@ public class Post {
 
     private long topicId;
 
+    @ElementCollection
+    private Set<Long> likeUsers;
+
     public Post() {
     }
 
@@ -37,6 +42,7 @@ public class Post {
         this.nick = nick;
         this.avatarUrl = avatarUrl;
         this.topicId = topicId;
+        likeUsers = new HashSet<>();
     }
 
     public long getId() {
@@ -110,5 +116,13 @@ public class Post {
 
     public void setTopicId(long topicId) {
         this.topicId = topicId;
+    }
+
+    public Set<Long> getLikeUsers() {
+        return likeUsers;
+    }
+
+    public void setLikeUsers(Set<Long> usersId) {
+        this.likeUsers = usersId;
     }
 }

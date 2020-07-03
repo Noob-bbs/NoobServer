@@ -89,6 +89,24 @@ public class PostController {
         return new Response(200, new UserPage(topicNum, postNum, likeNum, user));
     }
 
+    @GetMapping(value = "/post/addlike")
+    public Response addLike(@RequestParam long userId, @RequestParam long postId) {
+        int likeNum = postService.getPostById(postId).getLikeNum();
+        int curLikeNum;
+        try {
+            curLikeNum = postService.likePost(userId, postId);
+        } catch (Exception e) {
+            return new Response(203, e.getMessage());
+        }
+        if (likeNum < curLikeNum) {
+            return new Response(200, curLikeNum);
+        } else if (likeNum > curLikeNum) {
+            return new Response(201, curLikeNum);
+        } else {
+            return new Response(204, "点赞没有反应，数据错误");
+        }
+    }
+
 //    @GetMapping(value = "/post/searchpost")
 //    public Response searchPost(@RequestParam long userId)
 }

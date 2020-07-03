@@ -42,4 +42,21 @@ public class PostService {
         }
         return likeNum;
     }
+
+    public int likePost(long userId, long postId) {
+        Post post = postRepository.getPostById(postId);
+        for (long id :
+                post.getLikeUsers()) {
+            if (userId != id) { //点赞
+                post.getLikeUsers().add(userId);
+                post.setLikeNum(post.getLikeUsers().size());
+                postRepository.save(post);
+            } else {
+                post.getLikeUsers().remove(userId);
+                post.setLikeNum(post.getLikeUsers().size());
+                postRepository.save(post);
+            }
+        }
+        return post.getLikeNum();
+    }
 }
