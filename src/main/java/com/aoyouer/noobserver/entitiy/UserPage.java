@@ -61,4 +61,12 @@ public class UserPage {
     public void setLikeNum(int likeNum) {
         this.likeNum = likeNum;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
