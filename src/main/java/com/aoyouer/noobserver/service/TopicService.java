@@ -35,17 +35,12 @@ public class TopicService {
 
     public Map<String, Integer> getTagsInfo() {
         Map<String, Integer> tagsInfo = new HashMap<>();
-        for (Topic topic :
-                topicRepository.findAll()) {
-            for (String s :
-                    topic.getTags()) {
-                for (String exist :
-                        tagsInfo.keySet()) {
-                    if (s.equals(exist)) {  //存在就加上1，否则就新建一个。
-                        tagsInfo.put(s, tagsInfo.get(s) + 1);
-                    } else {
-                        tagsInfo.put(s, 1);
-                    }
+        for (Topic topic : topicRepository.findAll()) {
+            for (String s : topic.getTags()) {
+                if (tagsInfo.keySet().contains(s)) {
+                    tagsInfo.put(s, tagsInfo.get(s) + 1);
+                } else {
+                    tagsInfo.put(s, 1);
                 }
             }
         }
@@ -55,10 +50,8 @@ public class TopicService {
     public List<Topic> getTopicByTag(int pageSize, int pageNum, String tag) {
         List<Topic> topics = new ArrayList<>();
         List<Topic> desList = topicRepository.findAll(Sort.by("updateTime").descending());
-        for (Topic topic :
-                desList) {
-            for (String s :
-                    topic.getTags()) {
+        for (Topic topic : desList) {
+            for (String s : topic.getTags()) {
                 if (tag.equals(s)) {
                     topics.add(topic);
                     break;
@@ -107,7 +100,7 @@ public class TopicService {
         return topicRepository.findAll();
     }
 
-    public void deleteById(long id) throws Exception{
+    public void deleteById(long id) throws Exception {
         topicRepository.deleteById(id);
     }
 
