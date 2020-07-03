@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class PostService {
@@ -45,18 +46,20 @@ public class PostService {
 
     public int likePost(long userId, long postId) {
         Post post = postRepository.getPostById(postId);
-        for (long id :
-                post.getLikeUsers()) {
-            if (userId != id) { //点赞
-                post.getLikeUsers().add(userId);
-                post.setLikeNum(post.getLikeUsers().size());
-                postRepository.save(post);
-            } else {
-                post.getLikeUsers().remove(userId);
-                post.setLikeNum(post.getLikeUsers().size());
-                postRepository.save(post);
-            }
+        Set<Long> userIdSet = post.getLikeUsers();
+        if (!userIdSet.contains(userId)){
+            //点赞
+            userIdSet.add(userId);
+            post.setLikeUsers(userIdSet);
+            post.setLikeNum(post.getLikeNum() + 1);
         }
+        else {
+            //取消点赞
+            userIdSet.remove(userId);
+            post.setLikeUsers(userIdSet);
+            post.setLikeNum(post.getLikeNum() - 1);
+        }
+        postRepository.save(post);
         return post.getLikeNum();
     }
 }
