@@ -110,7 +110,7 @@ public class TopicController {
     }
 
     @GetMapping(value = "/topic/listbytag")
-    public Response deleteTopic(@RequestParam int pageSize,@RequestParam int pageNum
+    public Response getListByTopic(@RequestParam int pageSize,@RequestParam int pageNum
             , @RequestParam String tag) {
         try {
             return new Response(200, topicService.getTopicByTag(pageSize, pageNum, tag));
