@@ -86,6 +86,8 @@ public class PostController {
         int postNum = postService.getPostsByUserId(userId).size();
         int topicNum = topicService.getTopicsByUserId(userId).size();
         int likeNum = postService.getLikeNumByUserId(userId);
+        user.setSalt("");
+        user.setPassword("");
         return new Response(200, new UserPage(topicNum, postNum, likeNum, user));
     }
 
